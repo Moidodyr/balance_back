@@ -2,10 +2,18 @@ from django.db import models
 
 
 class Article(models.Model):
+    def upload_path(self, filename):
+        return 'images/article/{}/{}'.format(self.title, filename)
+
     title = models.CharField('Название статьи', max_length=150)
+    description = models.TextField('Описание', )
     content = models.TextField('Текст статьи', )
     created_at = models.DateTimeField('Дата публикации', auto_now_add=True)
     updated_at = models.DateTimeField('Дата последней редакции', auto_now=True)
+    img = models.ImageField('Обложка статьи',
+                            upload_to=upload_path,
+                            null=True,
+                            blank=True)
     is_published = models.BooleanField(default=True)
     like = models.BooleanField('Лайк', default=False)
 
@@ -19,7 +27,7 @@ class Article(models.Model):
 
 
 def img_directory_path(instance, filename):
-    return '{0}/{1}'.format(instance.article.title, filename)
+    return 'images/article/{}/{}'.format(instance.article.title, filename)
 
 
 class Image(models.Model):

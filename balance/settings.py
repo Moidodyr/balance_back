@@ -9,12 +9,14 @@ INSTALLED_APPS = [
     'article.apps.ArticleConfig',
 
     'rest_framework',
-    'djoser'
+    'djoser',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -60,8 +62,15 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d.%m.%Y - %H:%M'
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080"
+]
 
 LANGUAGE_CODE = 'ru-Ru'
 
@@ -74,7 +83,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-
 
 try:
     from .local_settings import *

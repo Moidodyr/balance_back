@@ -6,11 +6,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'article.apps.ArticleConfig',
-
     'rest_framework',
     'djoser',
-    'corsheaders'
+    'django_filters',
+    'corsheaders',
+
+    'article.apps.ArticleConfig'
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d.%m.%Y - %H:%M'

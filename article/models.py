@@ -14,6 +14,12 @@ class Article(models.Model):
                             upload_to=upload_path,
                             null=True,
                             blank=True)
+    category = models.ForeignKey(
+        'Category',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
     is_published = models.BooleanField(default=True)
     like = models.BooleanField('Лайк', default=False)
 
@@ -24,6 +30,17 @@ class Article(models.Model):
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
         ordering = ['-created_at']
+
+
+class Category(models.Model):
+    name = models.CharField('Название рубрики', max_length=150)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 
 def img_directory_path(instance, filename):
